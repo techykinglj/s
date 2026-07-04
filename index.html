@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Privacy Sentinel — Exposure Audit</title>
+  <meta name="description" content="An honest, in-browser privacy exposure audit. Real measurements only — no fabricated results.">
+  <meta name="theme-color" content="#0f4c5c">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sentinel">
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="44" height="44"><path d="M24 4l16 6v12c0 10.5-6.8 18.6-16 22-9.2-3.4-16-11.5-16-22V10l16-6z" fill="#0f4c5c"/><path d="M16.5 24.5l5 5 10-10" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h1>Privacy Sentinel</h1>
+      <p class="tagline">See what your browser really reveals — real measurements, nothing invented.</p>
+    </header>
+
+    <section class="controls" aria-label="Audit controls">
+      <button id="btn-connect" class="btn btn-primary" type="button">Connect</button>
+      <button id="btn-run" class="btn btn-primary" type="button" disabled>Run Full Audit</button>
+      <p id="connect-status" class="hint" role="status"></p>
+    </section>
+
+    <section class="optional-inputs" aria-label="Optional checks">
+      <details class="opt-box">
+        <summary>Optional: breach &amp; site checks (leave blank to skip)</summary>
+        <label for="inp-email">Email to check against known breaches
+          <input id="inp-email" type="email" autocomplete="off" placeholder="you@example.com" inputmode="email">
+        </label>
+        <label for="inp-password">Password to check against known leaks
+          <input id="inp-password" type="password" autocomplete="new-password" placeholder="never leaves this device in full">
+          <span class="micro">Only the first 5 characters of an anonymised hash are ever sent (k-anonymity). The password itself never leaves this page.</span>
+        </label>
+        <label for="inp-domain">A website of yours to check for HTTPS
+          <input id="inp-domain" type="text" autocomplete="off" placeholder="example.com" inputmode="url">
+        </label>
+      </details>
+    </section>
+
+    <section id="progress" class="progress" hidden aria-label="Audit progress">
+      <h2>Running checks…</h2>
+      <ol id="progress-list"></ol>
+    </section>
+
+    <section id="results" class="results" hidden aria-label="Audit results">
+      <h2>Your exposure report</h2>
+      <p id="results-summary" class="summary-line"></p>
+      <div id="cards"></div>
+    </section>
+
+    <section class="scope">
+      <h2>What this audit can — and cannot — see</h2>
+      <p>This audit inspects your browser, device fingerprint, network exposure, and known account breaches. It does not — and technically cannot from a web page — scan the apps or background processes on your phone. For deep process/persistence scanning of a Mac, use the Mac Deep Scan below.</p>
+      <p>Everything shown above is measured live on your device, in your browser, at the moment you run the audit. Nothing is stored or sent anywhere except the specific lookups each check describes.</p>
+    </section>
+
+    <section class="macscan">
+      <h2>Mac Deep Scan</h2>
+      <p>The real "what is secretly running, auto-starting, or phoning home" audit — for your own Mac. Downloads a small local tool (no installation, nothing sent anywhere; the report stays on your Mac).</p>
+      <a id="btn-download" class="btn btn-secondary" href="downloads/Privacy-Deep-Scan.zip" download>Download Mac Deep Scan</a>
+      <ol class="steps">
+        <li>Download, then open the ZIP in Downloads — it unpacks a <strong>Privacy Deep Scan</strong> folder.</li>
+        <li>First run only: <strong>right-click Privacy-Deep-Scan.command → Open → Open</strong> (macOS gatekeeps unknown downloads).</li>
+        <li>A report opens automatically in your browser when the scan finishes (about a minute).</li>
+      </ol>
+      <p class="micro">Prefer to read the code first? The scanner is one plain, commented Python file: <a href="downloads/deep_scan.py" download>deep_scan.py</a>.</p>
+    </section>
+
+    <section class="install-hint" id="ios-install" hidden>
+      <h2>Add to your home screen</h2>
+      <p>On iPhone/iPad: tap the <strong>Share</strong> button in Safari, then <strong>Add to Home Screen</strong>. The audit then opens like an app and works offline.</p>
+    </section>
+
+    <footer class="foot">
+      <p>All checks are read-only and inspect only your own browser and device. Honesty over theatre: anything we can't measure says so.</p>
+    </footer>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="checks.js"></script>
+  <script src="report.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
